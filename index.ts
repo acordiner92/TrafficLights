@@ -5,6 +5,10 @@ import * as Logger from "./TrafficLightLogger";
 
 Logger.initialiseLoggin();
 let trafficController = new TrafficController();
-// trafficController.addTrafficChangeAction([DIRECTION.north, DIRECTION.south], [DIRECTION.east, DIRECTION.west]);
-// trafficController.addTrafficChangeAction([DIRECTION.east, DIRECTION.west], [DIRECTION.north, DIRECTION.south]);
-trafficController.startSimulation(30);
+let time = 0;
+while (time < 30) {
+  trafficController.executeTrafficLightChange();
+  time = time + 30; // 30s for change to yellow
+  time = time + 60 * 5; // 5min light change
+}
+

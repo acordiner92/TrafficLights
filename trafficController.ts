@@ -3,7 +3,7 @@ import { COLOUR, DIRECTION } from "./TrafficLightConstants";
 import { events } from "./pubsub";
 
 class TrafficController {
-  trafficLights: TrafficLight[];
+  private trafficLights: TrafficLight[];
 
   constructor() {
     this.trafficLights = [];
@@ -14,16 +14,7 @@ class TrafficController {
     this.trafficLights.forEach( x => this.notifyTrafficLightChange(x));
   }
 
-  public startSimulation(minutesDur: number): void {
-    let time = 0;
-    while (time < minutesDur * 60) {
-      this.executeTrafficLightChange();
-      time = time + 30; // 30s for change to yellow
-      time = time + 60 * 5; // 5min light change
-    }
-  }
-
-  private executeTrafficLightChange() {
+  public executeTrafficLightChange() {
     let greenTrafficLights = this.trafficLights.filter(x => x.status === COLOUR.green);
     let redTrafficLight = this.trafficLights.filter(x => x.status === COLOUR.red);
 
