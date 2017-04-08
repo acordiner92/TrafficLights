@@ -2,23 +2,6 @@ import TrafficLight from "../TrafficLight";
 import { DIRECTION, COLOUR } from "../TrafficLightConstants";
 import * as sinon from "sinon";
 
-// function doesLogMessage(fn: any, expectedMessage: string) {
-//   let oldLog = console.log,
-//     result = false;
-
-//   console.log = function (s) {
-//     if (s === expectedMessage) {
-//       result = true;
-//     }
-//   };
-
-//   fn();
-//   console.log = oldLog;
-
-//   return result;
-// }
-
-
 test("Check that creating new traffic light constructor values are sets correctly", () => {
   // action
   console.log = jest.fn();
