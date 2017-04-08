@@ -9,9 +9,26 @@ class TrafficLight {
     this.printTrafficLightChange();
   }
 
-  changeStatus(status: string) {
-      this.status = status;
-      this.printTrafficLightChange();
+  toggleLight() {
+    if (this.status === COLOUR.green) {
+      this.changeToRed();
+    } else {
+      this.changeToGreen();
+    }
+  }
+
+  private changeToGreen() {
+    this.changeStatus(COLOUR.green);
+  }
+
+  private changeToRed() {
+    this.changeStatus(COLOUR.yellow);
+    this.changeStatus(COLOUR.red);
+  }
+
+  private changeStatus(status: string) {
+    this.status = status;
+    this.printTrafficLightChange();
   }
 
   private printTrafficLightChange() {

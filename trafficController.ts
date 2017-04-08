@@ -13,30 +13,11 @@ class TrafficController {
   }
 
   executeTrafficLightChange() {
-    let greenTrafficLights = this.trafficLights.filter(x => x.status === COLOUR.green);
-    let redTrafficLight = this.trafficLights.filter(x => x.status === COLOUR.red);
-
-    this.changeLightsToRed(greenTrafficLights);
-    this.changeLightsToGreen(redTrafficLight);
+    this.trafficLights.forEach(x => x.toggleLight());
   }
   
   getTrafficLights(): TrafficLight[] {
     return this.trafficLights;
-  }
-
-  private changeLightsToRed(trafficLights: TrafficLight[]) {
-    trafficLights.forEach(x => {
-      x.changeStatus(COLOUR.yellow);
-    });
-    trafficLights.forEach(x => {
-      x.changeStatus(COLOUR.red);
-    });
-  }
-
-  private changeLightsToGreen(trafficLights: TrafficLight[]) {
-    trafficLights.forEach(x => {
-      x.changeStatus(COLOUR.green);
-    });
   }
 }
 
