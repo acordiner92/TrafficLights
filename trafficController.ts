@@ -1,6 +1,5 @@
 import TrafficLight from "./TrafficLight";
 import { COLOUR, DIRECTION } from "./TrafficLightConstants";
-import { events } from "./pubsub";
 
 class TrafficController {
   private trafficLights: TrafficLight[];
@@ -11,7 +10,7 @@ class TrafficController {
     this.trafficLights.push(new TrafficLight(DIRECTION.south, COLOUR.green));
     this.trafficLights.push(new TrafficLight(DIRECTION.east, COLOUR.red));
     this.trafficLights.push(new TrafficLight(DIRECTION.west, COLOUR.red));
-    this.trafficLights.forEach( x => this.notifyTrafficLightChange(x));
+    this.trafficLights.forEach( x => this.printTrafficLightChange(x));
   }
 
   public executeTrafficLightChange() {
@@ -25,23 +24,23 @@ class TrafficController {
   private changeLightsToRed(trafficLights: TrafficLight[]) {
     trafficLights.forEach(x => {
       x.changeStatus(COLOUR.yellow);
-      this.notifyTrafficLightChange(x);
+      this.printTrafficLightChange(x);
     });
     trafficLights.forEach(x => {
       x.changeStatus(COLOUR.red);
-      this.notifyTrafficLightChange(x);
+      this.printTrafficLightChange(x);
     });
   }
 
   private changeLightsToGreen(trafficLights: TrafficLight[]) {
     trafficLights.forEach(x => {
       x.changeStatus(COLOUR.green);
-      this.notifyTrafficLightChange(x);
+      this.printTrafficLightChange(x);
     });
   }
 
-  private notifyTrafficLightChange(trafficLight: TrafficLight) {
-    events.emit("LIGHT_CHANGE", trafficLight);
+  private printTrafficLightChange(trafficLight: TrafficLight) {
+    console.log("TL: " + trafficLight.direction + " ==> " + trafficLight.status);
   }
 }
 
