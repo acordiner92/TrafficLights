@@ -4,21 +4,14 @@ import { events } from "./pubsub";
 
 class TrafficController {
   trafficLights: TrafficLight[];
-  trafficChangeActions: TrafficChangeAction[];
 
   constructor() {
     this.trafficLights = [];
-    this.trafficLights.push(new TrafficLight(DIRECTION.north));
-    this.trafficLights.push(new TrafficLight(DIRECTION.east));
-    this.trafficLights.push(new TrafficLight(DIRECTION.south));
-    this.trafficLights.push(new TrafficLight(DIRECTION.west));
-    this.trafficChangeActions = [];
-  }
-
-  public addTrafficChangeAction(toGreen: string[], toRed: string[]) {
-    let greenLights = this.trafficLights.filter(x => toGreen.indexOf(x.direction) > -1);
-    let redLights = this.trafficLights.filter(x => toRed.indexOf(x.direction) > -1);
-    this.trafficChangeActions.push({ greenLights, redLights });
+    this.trafficLights.push(new TrafficLight(DIRECTION.north, COLOUR.green));
+    this.trafficLights.push(new TrafficLight(DIRECTION.south, COLOUR.green));
+    this.trafficLights.push(new TrafficLight(DIRECTION.east, COLOUR.red));
+    this.trafficLights.push(new TrafficLight(DIRECTION.west, COLOUR.red));
+    this.trafficLights.forEach( x => this.notifyTrafficLightChange(x));
   }
 
   public startSimulation(minutesDur: number): void {
@@ -31,19 +24,14 @@ class TrafficController {
   }
 
   private executeTrafficLightChange() {
-    let trafficAction = this.getTrafficChangeAction();
-    this.changeLightsToRed(trafficAction.redLights);
-    this.changeLightsToGreen(trafficAction.greenLights);
-  }
+    let greenTrafficLights = this.trafficLights.filter(x => x.status === COLOUR.green);
+    let redTrafficLight = this.trafficLights.filter(x => x.status === COLOUR.red);
 
-  private getTrafficChangeAction(): TrafficChangeAction {
-    let action = this.trafficChangeActions.shift();
-    this.trafficChangeActions.push(action);
-    return action;
+    this.changeLightsToRed(greenTrafficLights);
+    this.changeLightsToGreen(redTrafficLight);
   }
 
   private changeLightsToRed(trafficLights: TrafficLight[]) {
-    trafficLights = trafficLights.filter(x => x.status === COLOUR.green);
     trafficLights.forEach(x => {
       x.changeStatus(COLOUR.yellow);
       this.notifyTrafficLightChange(x);
@@ -64,11 +52,6 @@ class TrafficController {
   private notifyTrafficLightChange(trafficLight: TrafficLight) {
     events.emit("LIGHT_CHANGE", trafficLight);
   }
-}
-
-class TrafficChangeAction {
-  greenLights: TrafficLight[];
-  redLights: TrafficLight[];
 }
 
 export default TrafficController;
