@@ -13,9 +13,15 @@ class TrafficIntersectionController {
   }
 
   executeTrafficLightChange() {
-    this.trafficLights.forEach(x => x.toggleChange());
+    this.trafficLights.forEach(x => {
+      if (x.getColour() === COLOUR.green) {
+        x.stop();
+      } else {
+        x.go();
+      }
+    });
   }
-  
+
   getTrafficLights(): TrafficLight[] {
     return this.trafficLights;
   }

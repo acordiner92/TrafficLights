@@ -8,13 +8,14 @@ class TrafficLight {
     this.colour = colour;
     this.printTrafficLightChange();
   }
+  
+  go() {
+    this.changeColour(COLOUR.green);
+  }
 
-  toggleChange() {
-    if (this.colour === COLOUR.green) {
-      this.changeToRed();
-    } else {
-      this.changeToGreen();
-    }
+  stop() {
+      this.changeColour(COLOUR.yellow);
+      this.changeColour(COLOUR.red);
   }
 
   getDirection() {
@@ -23,15 +24,6 @@ class TrafficLight {
 
   getColour() {
     return this.colour;
-  }
-
-  private changeToGreen() {
-    this.changeColour(COLOUR.green);
-  }
-
-  private changeToRed() {
-    this.changeColour(COLOUR.yellow);
-    this.changeColour(COLOUR.red);
   }
 
   private changeColour(colour: string) {
