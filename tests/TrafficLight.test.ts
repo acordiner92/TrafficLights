@@ -2,40 +2,47 @@ import TrafficLight from "../TrafficLight";
 import { DIRECTION, COLOUR } from "../TrafficLightConstants";
 import * as sinon from "sinon";
 
-test("Check that creating new traffic light constructor values are sets correctly", () => {
-  // action
-  console.log = jest.fn();
-  let trafficLight = new TrafficLight(DIRECTION.east, COLOUR.red);
 
-  // Assert 
-  expect(trafficLight.getDirection()).toBe(DIRECTION.east);
-  expect(trafficLight.getColour()).toBe(COLOUR.red);
-  expect(console.log).toBeCalledWith("TL: east ==> red");
-});
+describe("TrafficLight", () => {
+  beforeEach(() => {
+    console.log = jest.fn();
+  });
 
-test("Check if traffic light is red and then is set to go it should become green", () => {
-  // setup
-  console.log = jest.fn();
-  let trafficLight = new TrafficLight(DIRECTION.east, COLOUR.red);
+  test("Check that creating new traffic light constructor values are sets correctly", () => {
+    // action
+    let trafficLight = new TrafficLight(DIRECTION.east, COLOUR.red);
 
-  // action
-  trafficLight.go();
+    // Assert 
+    expect(trafficLight.getDirection()).toBe(DIRECTION.east);
+    expect(trafficLight.getColour()).toBe(COLOUR.red);
+    expect(console.log).toBeCalledWith("TL: east ==> red");
+  });
 
-  // Assert 
+  test("Check if traffic light is red and then is set to go it should become green", () => {
+    // setup
 
-  expect(trafficLight.getColour()).toBe(COLOUR.green);
-  expect(console.log).toHaveBeenLastCalledWith("TL: east ==> green");
-});
+    let trafficLight = new TrafficLight(DIRECTION.east, COLOUR.red);
 
-test("Check if traffic light is green and the light is stopped it should now be red", () => {
-  // setup
-  let trafficLight = new TrafficLight(DIRECTION.east, COLOUR.green);
+    // action
+    trafficLight.go();
 
-  // action
-  trafficLight.stop();
+    // Assert 
 
-  // Assert 
-  expect(trafficLight.getColour()).toBe(COLOUR.red);
-  expect(console.log).toBeCalledWith("TL: east ==> yellow");
-  expect(console.log).toHaveBeenLastCalledWith("TL: east ==> red");
+    expect(trafficLight.getColour()).toBe(COLOUR.green);
+    expect(console.log).toHaveBeenLastCalledWith("TL: east ==> green");
+  });
+
+  test("Check if traffic light is green and the light is stopped it should now be red", () => {
+    // setup
+    let trafficLight = new TrafficLight(DIRECTION.east, COLOUR.green);
+
+    // action
+    trafficLight.stop();
+
+    // Assert 
+    expect(trafficLight.getColour()).toBe(COLOUR.red);
+    expect(console.log).toBeCalledWith("TL: east ==> yellow");
+    expect(console.log).toHaveBeenLastCalledWith("TL: east ==> red");
+  });
+
 });
