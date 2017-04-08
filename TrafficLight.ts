@@ -2,15 +2,15 @@ import { COLOUR } from "./TrafficLightConstants";
 
 class TrafficLight {
   private direction: string;
-  private status: string;
-  constructor(direction: string, status: string) {
+  private colour: string;
+  constructor(direction: string, colour: string) {
     this.direction = direction;
-    this.status = status;
+    this.colour = colour;
     this.printTrafficLightChange();
   }
 
   toggleChange() {
-    if (this.status === COLOUR.green) {
+    if (this.colour === COLOUR.green) {
       this.changeToRed();
     } else {
       this.changeToGreen();
@@ -21,26 +21,26 @@ class TrafficLight {
     return this.direction;
   }
 
-  getStatus() {
-    return this.status;
+  getColour() {
+    return this.colour;
   }
 
   private changeToGreen() {
-    this.changeStatus(COLOUR.green);
+    this.changeColour(COLOUR.green);
   }
 
   private changeToRed() {
-    this.changeStatus(COLOUR.yellow);
-    this.changeStatus(COLOUR.red);
+    this.changeColour(COLOUR.yellow);
+    this.changeColour(COLOUR.red);
   }
 
-  private changeStatus(status: string) {
-    this.status = status;
+  private changeColour(colour: string) {
+    this.colour = colour;
     this.printTrafficLightChange();
   }
 
   private printTrafficLightChange() {
-    console.log("TL: " + this.direction + " ==> " + this.status);
+    console.log("TL: " + this.direction + " ==> " + this.colour);
   }
 }
 export default TrafficLight;
