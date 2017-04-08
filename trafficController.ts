@@ -5,6 +5,7 @@ import { events } from "./pubsub";
 class TrafficController {
   trafficLights: TrafficLight[];
   trafficChangeActions: TrafficChangeAction[];
+
   constructor() {
     this.trafficLights = [];
     this.trafficLights.push(new TrafficLight(DIRECTION.north));
@@ -14,57 +15,60 @@ class TrafficController {
     this.trafficChangeActions = [];
   }
 
-  addTrafficChangeAction(toGreen: string[], toRed: string[]) {
-    this.trafficChangeActions.unshift({ toGreen, toRed });
+  public addTrafficChangeAction(toGreen: string[], toRed: string[]) {
+    let greenLights = this.trafficLights.filter(x => toGreen.indexOf(x.direction) > -1);
+    let redLights = this.trafficLights.filter(x => toRed.indexOf(x.direction) > -1);
+    this.trafficChangeActions.push({ greenLights, redLights });
   }
 
-  startSimulation(minutesDur: number): void {
+  public startSimulation(minutesDur: number): void {
     let time = 0;
     while (time < minutesDur * 60) {
-      let action = this.getTrafficChangeAction();
-
-      // action.toRed.forEach((x: string) => {
-      let redTrafficLights = this.trafficLights.filter(y => action.toRed.indexOf(y.direction) > -1 && y.status !== COLOUR.red);
-      redTrafficLights = redTrafficLights.map(s => {
-        s.changeStatus(COLOUR.yellow);
-        this.notifyTrafficLightChange(s);
-        return s;
-      });
-      redTrafficLights = redTrafficLights.map(s => {
-        s.changeStatus(COLOUR.red);
-        this.notifyTrafficLightChange(s);
-        return s;
-      });
-      // });
+      this.executeTrafficLightChange();
       time = time + 30; // 30s for change to yellow
-
-      action.toGreen.forEach((x: any) => {
-        let trafficLights = this.trafficLights.filter(y => y.direction === x);
-        trafficLights = trafficLights.map(s => {
-          s.changeStatus(COLOUR.green);
-          this.notifyTrafficLightChange(s);
-          return s;
-        });
-      });
-
       time = time + 60 * 5; // 5min light change
     }
   }
 
-  getTrafficChangeAction(): TrafficChangeAction {
-    let action = this.trafficChangeActions.pop();
-    this.trafficChangeActions.unshift(action);
+  private executeTrafficLightChange() {
+    let trafficAction = this.getTrafficChangeAction();
+    this.changeLightsToRed(trafficAction.redLights);
+    this.changeLightsToGreen(trafficAction.greenLights);
+  }
+
+  private getTrafficChangeAction(): TrafficChangeAction {
+    let action = this.trafficChangeActions.shift();
+    this.trafficChangeActions.push(action);
     return action;
   }
 
-  notifyTrafficLightChange(trafficLight: TrafficLight) {
+  private changeLightsToRed(trafficLights: TrafficLight[]) {
+    trafficLights = trafficLights.filter(x => x.status === COLOUR.green);
+    trafficLights.forEach(x => {
+      x.changeStatus(COLOUR.yellow);
+      this.notifyTrafficLightChange(x);
+    });
+    trafficLights.forEach(x => {
+      x.changeStatus(COLOUR.red);
+      this.notifyTrafficLightChange(x);
+    });
+  }
+
+  private changeLightsToGreen(trafficLights: TrafficLight[]) {
+    trafficLights.forEach(x => {
+      x.changeStatus(COLOUR.green);
+      this.notifyTrafficLightChange(x);
+    });
+  }
+
+  private notifyTrafficLightChange(trafficLight: TrafficLight) {
     events.emit("LIGHT_CHANGE", trafficLight);
   }
 }
 
 class TrafficChangeAction {
-  toGreen: string[];
-  toRed: string[];
+  greenLights: TrafficLight[];
+  redLights: TrafficLight[];
 }
 
 export default TrafficController;
