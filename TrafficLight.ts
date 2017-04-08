@@ -1,11 +1,11 @@
-import * as Traffic from "./TrafficLightConstants";
+import { COLOUR } from "./TrafficLightConstants";
 
 class TrafficLight {
   direction: string;
   status: string;
   constructor(direction: string) {
     this.direction = direction;
-    this.status = Traffic.COLOUR.red;
+    this.status = COLOUR.red;
   }
 
   changeStatus(status: string) {

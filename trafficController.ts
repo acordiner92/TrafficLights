@@ -1,5 +1,5 @@
 import TrafficLight from "./TrafficLight";
-import * as Traffic from "./TrafficLightConstants";
+import { COLOUR, DIRECTION } from "./TrafficLightConstants";
 import { events } from "./pubsub";
 
 class TrafficController {
@@ -7,10 +7,10 @@ class TrafficController {
   trafficChangeActions: TrafficChangeAction[];
   constructor() {
     this.trafficLights = [];
-    this.trafficLights.push(new TrafficLight(Traffic.DIRECTION.north));
-    this.trafficLights.push(new TrafficLight(Traffic.DIRECTION.east));
-    this.trafficLights.push(new TrafficLight(Traffic.DIRECTION.south));
-    this.trafficLights.push(new TrafficLight(Traffic.DIRECTION.west));
+    this.trafficLights.push(new TrafficLight(DIRECTION.north));
+    this.trafficLights.push(new TrafficLight(DIRECTION.east));
+    this.trafficLights.push(new TrafficLight(DIRECTION.south));
+    this.trafficLights.push(new TrafficLight(DIRECTION.west));
     this.trafficChangeActions = [];
   }
 
@@ -24,14 +24,14 @@ class TrafficController {
       let action = this.getTrafficChangeAction();
 
       // action.toRed.forEach((x: string) => {
-      let redTrafficLights = this.trafficLights.filter(y => action.toRed.indexOf(y.direction) > -1 && y.status !== Traffic.COLOUR.red);
+      let redTrafficLights = this.trafficLights.filter(y => action.toRed.indexOf(y.direction) > -1 && y.status !== COLOUR.red);
       redTrafficLights = redTrafficLights.map(s => {
-        s.changeStatus(Traffic.COLOUR.yellow);
+        s.changeStatus(COLOUR.yellow);
         this.notifyTrafficLightChange(s);
         return s;
       });
       redTrafficLights = redTrafficLights.map(s => {
-        s.changeStatus(Traffic.COLOUR.red);
+        s.changeStatus(COLOUR.red);
         this.notifyTrafficLightChange(s);
         return s;
       });
@@ -41,7 +41,7 @@ class TrafficController {
       action.toGreen.forEach((x: any) => {
         let trafficLights = this.trafficLights.filter(y => y.direction === x);
         trafficLights = trafficLights.map(s => {
-          s.changeStatus(Traffic.COLOUR.green);
+          s.changeStatus(COLOUR.green);
           this.notifyTrafficLightChange(s);
           return s;
         });
