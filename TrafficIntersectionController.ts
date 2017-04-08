@@ -1,7 +1,7 @@
 import TrafficLight from "./TrafficLight";
 import { COLOUR, DIRECTION } from "./TrafficLightConstants";
 
-class TrafficController {
+class TrafficIntersectionController {
   private trafficLights: TrafficLight[];
 
   constructor() {
@@ -13,7 +13,7 @@ class TrafficController {
   }
 
   executeTrafficLightChange() {
-    this.trafficLights.forEach(x => x.toggleLight());
+    this.trafficLights.forEach(x => x.toggleChange());
   }
   
   getTrafficLights(): TrafficLight[] {
@@ -21,4 +21,4 @@ class TrafficController {
   }
 }
 
-export default TrafficController;
+export default TrafficIntersectionController;

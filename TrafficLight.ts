@@ -1,20 +1,28 @@
 import { COLOUR } from "./TrafficLightConstants";
 
 class TrafficLight {
-  direction: string;
-  status: string;
+  private direction: string;
+  private status: string;
   constructor(direction: string, status: string) {
     this.direction = direction;
     this.status = status;
     this.printTrafficLightChange();
   }
 
-  toggleLight() {
+  toggleChange() {
     if (this.status === COLOUR.green) {
       this.changeToRed();
     } else {
       this.changeToGreen();
     }
+  }
+
+  getDirection() {
+    return this.direction;
+  }
+
+  getStatus() {
+    return this.status;
   }
 
   private changeToGreen() {
