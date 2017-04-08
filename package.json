@@ -4,7 +4,7 @@
   "description": "Traffic Light Simulation",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -20,8 +20,20 @@
   "devDependencies": {
     "@types/jest": "^19.2.2",
     "jest": "^19.0.2",
+    "ts-jest": "^19.0.8",
     "ts-node": "^3.0.2",
     "tslint": "^5.0.0",
     "typescript": "^2.2.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   }
 }

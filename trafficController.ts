@@ -12,12 +12,16 @@ class TrafficController {
     this.trafficLights.push(new TrafficLight(DIRECTION.west, COLOUR.red));
   }
 
-  public executeTrafficLightChange() {
+  executeTrafficLightChange() {
     let greenTrafficLights = this.trafficLights.filter(x => x.status === COLOUR.green);
     let redTrafficLight = this.trafficLights.filter(x => x.status === COLOUR.red);
 
     this.changeLightsToRed(greenTrafficLights);
     this.changeLightsToGreen(redTrafficLight);
+  }
+  
+  getTrafficLights(): TrafficLight[] {
+    return this.trafficLights;
   }
 
   private changeLightsToRed(trafficLights: TrafficLight[]) {
