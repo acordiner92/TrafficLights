@@ -1,10 +1,10 @@
 import { events } from "./pubsub";
 import TrafficController from "./trafficController";
-import DIRECTION from "./Direction";
+import * as Traffic from "./TrafficLightConstants";
 import * as Logger from "./TrafficLightLogger";
 
 Logger.initialiseLoggin();
 let trafficController = new TrafficController();
-trafficController.addTrafficChangeAction([DIRECTION.North, DIRECTION.South], [DIRECTION.East, DIRECTION.West]);
-trafficController.addTrafficChangeAction([DIRECTION.East, DIRECTION.West], [DIRECTION.North, DIRECTION.South]);
+trafficController.addTrafficChangeAction([Traffic.DIRECTION.north, Traffic.DIRECTION.south], [Traffic.DIRECTION.east, Traffic.DIRECTION.west]);
+trafficController.addTrafficChangeAction([Traffic.DIRECTION.east, Traffic.DIRECTION.west], [Traffic.DIRECTION.north, Traffic.DIRECTION.south]);
 trafficController.startSimulation(30);
