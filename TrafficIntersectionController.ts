@@ -1,6 +1,12 @@
 import TrafficLight from "./TrafficLight";
 import { COLOUR, DIRECTION } from "./TrafficLightConstants";
 
+
+/**
+ * Handles the traffic light changes at a traffic light intersection
+ * 
+ * @class TrafficIntersectionController
+ */
 class TrafficIntersectionController {
   private trafficLights: TrafficLight[];
 
@@ -12,6 +18,13 @@ class TrafficIntersectionController {
     this.trafficLights.push(new TrafficLight(DIRECTION.west, COLOUR.red));
   }
 
+
+  /**
+   * Changes the traffic light sets
+   * 
+   * 
+   * @memberOf TrafficIntersectionController
+   */
   executeTrafficLightChange() {
     this.trafficLights.forEach(x => {
       if (x.getColour() === COLOUR.green) {
