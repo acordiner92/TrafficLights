@@ -8,16 +8,19 @@ import { COLOUR, DIRECTION } from "./TrafficLightConstants";
  * @class TrafficIntersectionController
  */
 class TrafficIntersectionController {
-  private trafficLights: TrafficLight[];
+  private northLight: TrafficLight;
+  private eastLight: TrafficLight;
+  private southLight: TrafficLight;
+  private westLight: TrafficLight;
+
+  private trafficCycle = 0;
 
   constructor() {
-    this.trafficLights = [];
-    this.trafficLights.push(new TrafficLight(DIRECTION.north, COLOUR.green));
-    this.trafficLights.push(new TrafficLight(DIRECTION.south, COLOUR.green));
-    this.trafficLights.push(new TrafficLight(DIRECTION.east, COLOUR.red));
-    this.trafficLights.push(new TrafficLight(DIRECTION.west, COLOUR.red));
+    this.northLight = new TrafficLight(DIRECTION.north, COLOUR.red);
+    this.eastLight = new TrafficLight(DIRECTION.east, COLOUR.red);
+    this.southLight = new TrafficLight(DIRECTION.south, COLOUR.red);
+    this.westLight = new TrafficLight(DIRECTION.west, COLOUR.red);
   }
-
 
   /**
    * Changes the traffic light sets
@@ -26,17 +29,29 @@ class TrafficIntersectionController {
    * @memberOf TrafficIntersectionController
    */
   executeTrafficLightChange() {
-    this.trafficLights.forEach(x => {
-      if (x.getColour() === COLOUR.green) {
-        x.stop();
-      } else {
-        x.go();
-      }
-    });
+    if (this.trafficCycle === 0) {
+      this.executeInitialTrafficLightChange();
+    } else {
+      this.changeLights([this.northLight, this.southLight, this.eastLight, this.westLight]);
+    }
+    this.trafficCycle++;
   }
 
   getTrafficLights(): TrafficLight[] {
-    return this.trafficLights;
+    return [this.northLight, this.southLight, this.eastLight, this.westLight];
+  }
+
+  private executeInitialTrafficLightChange() {
+    this.northLight.go();
+    this.southLight.go();
+  }
+
+  private changeLights(trafficLight: TrafficLight[]) {
+    let greenLights = trafficLight.filter(x => x.getColour() === COLOUR.green);
+    let redLights = trafficLight.filter(x => x.getColour() === COLOUR.red);
+
+    greenLights.forEach(x => x.stop());
+    redLights.forEach(x => x.go());
   }
 }
 
