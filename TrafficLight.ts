@@ -38,10 +38,26 @@ class TrafficLight {
       this.changeColour(COLOUR.red);
   }
 
+
+  /**
+   * Returns traffic light direction
+   * 
+   * @returns 
+   * 
+   * @memberOf TrafficLight
+   */
   getDirection() {
     return this.direction;
   }
 
+  
+  /**
+   * Returns traffic light colour
+   * 
+   * @returns 
+   * 
+   * @memberOf TrafficLight
+   */
   getColour() {
     return this.colour;
   }
@@ -61,6 +77,14 @@ class TrafficLight {
     this.printTrafficLightChange();
   }
 
+  
+  /**
+   * Outputs the traffic light change to console
+   * 
+   * @private
+   * 
+   * @memberOf TrafficLight
+   */
   private printTrafficLightChange() {
     console.log("TL: " + this.direction + " ==> " + this.colour);
   }

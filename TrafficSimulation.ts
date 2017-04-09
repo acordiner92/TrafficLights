@@ -34,6 +34,14 @@ class TrafficSimulation {
     }
   }
 
+  
+  /**
+   * Returns the number of times traffic lights have changed
+   * 
+   * @returns 
+   * 
+   * @memberOf TrafficSimulation
+   */
   getNumTrafficChanges() {
     return this.numTraffficChanges;
   }
