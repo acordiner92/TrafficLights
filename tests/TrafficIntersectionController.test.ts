@@ -1,6 +1,5 @@
 import TrafficIntersectionController from "../TrafficIntersectionController";
 import { DIRECTION, COLOUR } from "../TrafficLightConstants";
-import * as sinon from "sinon";
 
 
 describe("TrafficIntersectionController", () => {

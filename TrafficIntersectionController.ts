@@ -41,11 +41,29 @@ class TrafficIntersectionController {
     return [this.northLight, this.southLight, this.eastLight, this.westLight];
   }
 
+ 
+  /**
+   * Changes the north and south lights to green for initial traffic change
+   * 
+   * @private
+   * 
+   * @memberOf TrafficIntersectionController
+   */
   private executeInitialTrafficLightChange() {
     this.northLight.go();
     this.southLight.go();
   }
 
+  
+  /**
+   * Changes all red lights to green and all green lights to red to
+   * represent a intersection change
+   * 
+   * @private
+   * @param {TrafficLight[]} trafficLight 
+   * 
+   * @memberOf TrafficIntersectionController
+   */
   private changeLights(trafficLight: TrafficLight[]) {
     let greenLights = trafficLight.filter(x => x.getColour() === COLOUR.green);
     let redLights = trafficLight.filter(x => x.getColour() === COLOUR.red);
